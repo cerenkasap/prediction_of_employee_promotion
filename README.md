@@ -3,5 +3,4 @@
 
 ### Resources Used
 
-[Calculating the missing value ratio]
-(https://www.analyticsvidhya.com/blog/2021/04/beginners-guide-to-missing-value-ratio-and-its-implementation/)
+[Calculating the missing value ratio](https://www.analyticsvidhya.com/blog/2021/04/beginners-guide-to-missing-value-ratio-and-its-implementation/)
