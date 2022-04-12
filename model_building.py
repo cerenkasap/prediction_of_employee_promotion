@@ -1,10 +1,6 @@
 #import libraries
 import pandas as pd
-import numpy as np
-from sklearn.preprocessing import LabelEncoder
-from sklearn.feature_extraction.text import TfidfVectorizer
 from imblearn.over_sampling import SMOTE
-from collections import Counter
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
@@ -17,11 +13,11 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 from sklearn.model_selection import RepeatedStratifiedKFold
-from imblearn.over_sampling import SMOTE
+
 
 #pull the datasets
 df=pd.read_csv(r'data_scaled.csv', index_col=False)
-df_test=pd.read_csv(r'test.csv', index_col=False)
+df_test=pd.read_csv(r'test_scaled.csv', index_col=False)
                    
 #Model selection and building
 
@@ -29,6 +25,7 @@ df_test=pd.read_csv(r'test.csv', index_col=False)
 #Split the dataset
 X=df.loc[:, df.columns != 'is_promoted']
 y=df['is_promoted']
+X_test=df_test
 
 #Resampling for imbalanced data
 X_resample, y_resample  = SMOTE().fit_resample(X, y)
@@ -49,7 +46,7 @@ plt.savefig('images/donut_chart_after_resampling.png', dpi=300)
 plt.show()
 
 #Split the dataset
-X_train, X_test, y_train, y_test = train_test_split(X_resample, y_resample, test_size=0.2, random_state=42)
+X_train, X_val, y_train, y_val = train_test_split(X_resample, y_resample, test_size=0.2, random_state=42)
 
 #Model building
 dt = DecisionTreeClassifier()
@@ -64,3 +61,6 @@ Models_Dict = {0: "Decision Tree", 1: "Logistic Regression", 2: "SVC", 3: "Rando
 
 for i, model in enumerate(Models):
   print("{} Accuracy: {}".format(Models_Dict[i], cross_val_score(model, X_train, y_train, cv = 10, scoring = "accuracy").mean()))
+
+#Hyperparamater Tuning
+
