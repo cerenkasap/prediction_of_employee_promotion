@@ -28,12 +28,12 @@ Logistic Regression model performed better than any other models in this project
 
 |Model                      |Test Accuracy Score|                      
 | -------------             |:-----------------:|                       
-|Decision Tree              |0.920834129240687 |
-|Logistic Regression        |0.7677999936793536|
-|Support Vector Classifier  |0.5890109471958787|
-|Random Forest Classifier   |0.5638441049057488|
-|Naive Bayes                |0.5997986184287554|
-|K-Neighbots                |0.5013675213675214|
+|Decision Tree              |0.8845960744575485|
+|Logistic Regression        |0.9368014142855955|
+|Support Vector Classifier  |0.|
+|Random Forest Classifier   |0.|
+|Naive Bayes                |0.|
+|K-Neighbots                |0.|
 
 ## Hyperparameter Tuning
 
