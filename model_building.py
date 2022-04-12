@@ -1,7 +1,9 @@
 #import libraries
 import pandas as pd
+import numpy as np
 from imblearn.over_sampling import SMOTE
 import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
@@ -63,4 +65,97 @@ for i, model in enumerate(Models):
   print("{} Accuracy: {}".format(Models_Dict[i], cross_val_score(model, X_train, y_train, cv = 10, scoring = "accuracy").mean()))
 
 #Hyperparamater Tuning
+params = {
+    'max_depth': [2, 3, 5, 10, 20],
+    'min_samples_leaf': [5, 10, 20, 50, 100],
+    'criterion': ["gini", "entropy"]
+}
 
+# Instantiate the grid search model
+grid_search = GridSearchCV(estimator=dt, 
+                           param_grid=params, 
+                           cv=4, n_jobs=-1, verbose=1, scoring = "accuracy")
+
+grid_search.fit(X_train, y_train)
+best_accuracy = grid_search.best_score_
+best_parameters = grid_search.best_params_
+
+print("Best Accuracy: {:.2f} %".format(best_accuracy*100))
+print("Best Parameters:", best_parameters)
+
+#Best model
+Classifier =  DecisionTreeClassifier(criterion= 'gini', max_depth= 20, min_samples_leaf= 5)
+Classifier.fit(X_train, y_train)
+
+Prediction = Classifier.predict(X_val)
+
+#Metrics
+accuracy_score(y_val, Prediction)
+
+#Confusion Matrix
+ConfusionMatrix = confusion_matrix(y_val, Prediction)
+
+# Plotting Function for Confusion Matrix
+colors = ['#4F6272', '#DD7596']
+
+def plot_cm(cm, classes, title, normalized = False, cmap = plt.cm.BuPu):
+    plt.imshow(cm, interpolation = "nearest", cmap = cmap)
+    plt.title(title, pad = 20)
+    plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes)
+    plt.yticks(tick_marks, classes)
+    
+
+    if normalized:
+        cm = cm.astype('float') / cm.sum(axis = 1)[: np.newaxis]
+        print("Normalized Confusion Matrix")
+    else:
+        print("Unnormalized Confusion Matrix")
+  
+    threshold = cm.max() / 2
+    for i in range(cm.shape[0]):
+        for j in range(cm.shape[1]):
+            plt.text(j, i, cm[i, j], horizontalalignment = "center", color = "white" if cm[i, j] > threshold else "black")
+
+    plt.tight_layout()
+    plt.xlabel("Predicted Promotion", labelpad = 20)
+    plt.ylabel("Real Promotion", labelpad = 20)
+    
+plot_cm(ConfusionMatrix, classes = ["Positive", "Negative"], title = "Confusion Matrix of Employee Promotion classification")
+plt.tight_layout()
+plt.savefig('images/confusion_matrix.png', dpi=300)
+
+print(classification_report(y_val, Prediction))
+
+#Predictions for next year
+prediction_upcoming = Classifier.predict(X_test)
+df_pred = pd.DataFrame(prediction_upcoming , columns = ['Predictions'])
+predicts=df_pred['Predictions'].value_counts()
+df_pred.to_csv('df_pred.csv', index=False)
+
+colors = ['#DD7596', '#4F6272']
+fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 5))
+df_pred.Predictions.value_counts().plot(kind='pie', labels=None, autopct='%.2f', ax=ax1, wedgeprops = { 'linewidth' : 1, 'edgecolor' : 'white' }, colors=colors).legend(labels={
+                     "1","0"})
+central_circle = plt.Circle((0, 0), 0.4, color='white')
+fig = plt.gcf()
+fig.gca().add_artist(central_circle)
+plt.rc('font', size=12)
+plt.title('% of predicted promotions', size=15)
+plt.tight_layout()
+plt.savefig('images/pred_donut_chart.png', dpi=300)
+plt.show()
+
+#Feature importances
+feature_importances = grid_search.best_estimator_.feature_importances_
+feature_importance = {}
+for i in range(len(X_train.columns)):
+    feature_importance[X_train.columns[i]] = feature_importances[i]
+importance_df = pd.DataFrame(list(feature_importance.items()),columns=['feature','importance'])
+importance_df = importance_df.sort_values('importance',ascending=False)
+plt.xticks(rotation='vertical')
+plt.rcParams['figure.figsize'] = [50, 10]
+sns.barplot(x="feature",y="importance",data=importance_df)
+plt.savefig('images/feature_importances.png')
+plt.show()
