@@ -10,6 +10,11 @@ Python version: *Python 3.7.11*
 
 [Calculating the missing value ratio](https://www.analyticsvidhya.com/blog/2021/04/beginners-guide-to-missing-value-ratio-and-its-implementation/)
 
+[Binary classification project with similar dataset](https://www.kaggle.com/code/avi111297/eda-on-employee-promo-pred-got-93-6-accuracy)
+
+[Binary classification project with similar dataset](https://www.kaggle.com/code/amulya9/predict-employee-promotion-result/notebook)
+
+
 ## Data Collection
 
 ## Data Cleaning
@@ -28,12 +33,12 @@ Logistic Regression model performed better than any other models in this project
 
 |Model                      |Test Accuracy Score|                      
 | -------------             |:-----------------:|                       
-|Decision Tree              |0.8845960744575485|
-|Logistic Regression        |0.9368014142855955|
-|Support Vector Classifier  |0.|
-|Random Forest Classifier   |0.|
-|Naive Bayes                |0.|
-|K-Neighbots                |0.|
+|Decision Tree              |0.9195253234957474|
+|Logistic Regression        |0.7659303362220304|
+|Support Vector Classifier  |0.8381531307413898|
+|Random Forest Classifier   |0.9524331256811436|
+|Naive Bayes                |0.6817535632799406|
+|K-Neighbots                |0.8508799620065138|
 
 ## Hyperparameter Tuning
 
