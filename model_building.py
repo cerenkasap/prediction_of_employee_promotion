@@ -17,18 +17,39 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 from sklearn.model_selection import RepeatedStratifiedKFold
+from imblearn.over_sampling import SMOTE
 
 #pull the datasets
 df=pd.read_csv(r'data_scaled.csv', index_col=False)
 df_test=pd.read_csv(r'test.csv', index_col=False)
-                     
+                   
 #Model selection and building
 
 #Model Selection
 #Split the dataset
 X=df.loc[:, df.columns != 'is_promoted']
 y=df['is_promoted']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+#Resampling for imbalanced data
+X_resample, y_resample  = SMOTE().fit_resample(X, y)
+
+#Donut chart
+colors = ['#4F6272', '#DD7596']
+fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 5))
+y_resample.value_counts().head(3).plot(kind='pie', labels=None, autopct='%.2f', ax=ax1, wedgeprops = { 'linewidth' : 1, 'edgecolor' : 'white' }, colors=colors).legend(labels={
+                     "1",
+                     "0"})
+central_circle = plt.Circle((0, 0), 0.4, color='white')
+fig = plt.gcf()
+fig.gca().add_artist(central_circle)
+plt.rc('font', size=12)
+plt.title('% of promotions', size=15)
+plt.tight_layout()
+plt.savefig('images/donut_chart_after_resampling.png', dpi=300)
+plt.show()
+
+#Split the dataset
+X_train, X_test, y_train, y_test = train_test_split(X_resample, y_resample, test_size=0.2, random_state=42)
 
 #Model building
 dt = DecisionTreeClassifier()
