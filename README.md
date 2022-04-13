@@ -121,7 +121,7 @@ I used six models *(Decision Tree Classifier, Logistic Regression, Support Vecto
 
 Random Forest Classifier model performed better than any other models in this project but after tuning the parameters the accuracy dropped to 78% so that's why I used Decision Tree model as it comes to the second highest score.
 
-|Model                      |Cross Validation Accuracy Score||                      
+|Model                      |Cross Validation Accuracy Score|                      
 | -------------             |:-----------------:|                       
 |Decision Tree              |0.9195253234957474|
 |Logistic Regression        |0.7659303362220304|
@@ -154,10 +154,10 @@ The Confusion Matrix above shows that our model needs to be improved to predict 
 
 ![alt text](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/confusion_matrix.png "Confusion Matrix of Prediction of Employee promotion")
 
-|Data     |Accuracy Score (%)|  |Error (%)|                    
-| --------|:----------------    |:-------:| 
-|Training| 91.95             |  |8.05|
-|Test|     89.49             |  |10.51|
+|Data     |Accuracy Score (%) | |Error (%)|                    
+| --------|:----------------  | |-------:| 
+|Training | 91.95             | |8.05|
+|Test     | 89.49             | |10.51|
 Since the accuracy on the training data **(91.95%)** (8.05% error) is less than the accuracy on the test data **(89.49%)** which means **10.51% error** , we can say our model is **overfitting** and needs to be improved.
 
 ## Notes
