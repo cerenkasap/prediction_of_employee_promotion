@@ -1,6 +1,6 @@
 ## Prediction of Employee Promotion - Binary Classification 🏆: Project Overview
 
-Created a model that can classify an employee promotion as a Positive or a Negative with **(89% Accuracy)**.
+Created a model that can classify an employee promotion with **(89.49% Accuracy)**.
 
 Used two datasets: PromosSample.csv as historical data with **54808 examples** and test.csv as current data **23490 examples** using pandas library in python.
 
