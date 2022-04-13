@@ -15,6 +15,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 from sklearn.model_selection import RepeatedStratifiedKFold
+import pickle
 
 
 #pull the datasets
@@ -27,7 +28,6 @@ df_test=pd.read_csv(r'test_scaled.csv', index_col=False)
 #Split the dataset
 X=df.loc[:, df.columns != 'is_promoted']
 y=df['is_promoted']
-X_test=df_test
 
 #Resampling for imbalanced data
 X_resample, y_resample  = SMOTE().fit_resample(X, y)
@@ -48,7 +48,7 @@ plt.savefig('images/donut_chart_after_resampling.png', dpi=300)
 plt.show()
 
 #Split the dataset
-X_train, X_val, y_train, y_val = train_test_split(X_resample, y_resample, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X_resample, y_resample, test_size=0.2, random_state=42)
 
 #Model building
 dt = DecisionTreeClassifier()
@@ -64,6 +64,7 @@ Models_Dict = {0: "Decision Tree", 1: "Logistic Regression", 2: "SVC", 3: "Rando
 for i, model in enumerate(Models):
   print("{} Accuracy: {}".format(Models_Dict[i], cross_val_score(model, X_train, y_train, cv = 10, scoring = "accuracy").mean()))
 
+
 #Hyperparamater Tuning
 params = {
     'max_depth': [2, 3, 5, 10, 20],
@@ -76,24 +77,28 @@ grid_search = GridSearchCV(estimator=dt,
                            param_grid=params, 
                            cv=4, n_jobs=-1, verbose=1, scoring = "accuracy")
 
+# fitting the model for grid search
 grid_search.fit(X_train, y_train)
 best_accuracy = grid_search.best_score_
 best_parameters = grid_search.best_params_
-
+best_estimator = grid_search.best_estimator_
 print("Best Accuracy: {:.2f} %".format(best_accuracy*100))
 print("Best Parameters:", best_parameters)
+print("Best Estimator:", best_estimator)
 
-#Best model
-Classifier =  DecisionTreeClassifier(criterion= 'gini', max_depth= 20, min_samples_leaf= 5)
+#Best Model
+Classifier = RandomForestClassifier(criterion= 'gini', max_depth= 20, min_samples_leaf= 5)
 Classifier.fit(X_train, y_train)
 
-Prediction = Classifier.predict(X_val)
+Prediction = Classifier.predict(X_test)
+print('Test Accuracy: ', grid_search.score(X_test, y_test))
+
 
 #Metrics
-accuracy_score(y_val, Prediction)
+accuracy_score(y_test, Prediction)
 
 #Confusion Matrix
-ConfusionMatrix = confusion_matrix(y_val, Prediction)
+ConfusionMatrix = confusion_matrix(y_test, Prediction)
 
 # Plotting Function for Confusion Matrix
 colors = ['#4F6272', '#DD7596']
@@ -126,10 +131,10 @@ plot_cm(ConfusionMatrix, classes = ["Positive", "Negative"], title = "Confusion 
 plt.tight_layout()
 plt.savefig('images/confusion_matrix.png', dpi=300)
 
-print(classification_report(y_val, Prediction))
+print(classification_report(y_test, Prediction))
 
 #Predictions for next year
-prediction_upcoming = Classifier.predict(X_test)
+prediction_upcoming = Classifier.predict(df_test)
 df_pred = pd.DataFrame(prediction_upcoming , columns = ['Predictions'])
 predicts=df_pred['Predictions'].value_counts()
 df_pred.to_csv('df_pred.csv', index=False)
@@ -159,3 +164,12 @@ plt.rcParams['figure.figsize'] = [50, 10]
 sns.barplot(x="feature",y="importance",data=importance_df)
 plt.savefig('images/feature_importances.png')
 plt.show()
+
+#pickle the model
+pickl = {'model': grid_search.best_estimator_}
+pickle.dump( pickl, open( 'model_file' + ".p", "wb" ) )
+
+file_name = "model_file.p"
+with open(file_name, 'rb') as pickled:
+    data = pickle.load(pickled)
+    model = data['model']
