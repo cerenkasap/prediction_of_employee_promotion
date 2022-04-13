@@ -1,8 +1,8 @@
 ## Prediction of Employee Promotion - Binary Classification 🏆: Project Overview
 
-Created a model that can classify a employee promotion as a Positive or a Negative with **(89% Accuracy)**.
+Created a model that can classify an employee promotion as a Positive or a Negative with **(89% Accuracy)**.
 
-Used two dataset: PromosSample.csv as a historical data with **54808 examples** and test.csv as a current data **23490 examples** using pandas library in python.
+Used two datasets: PromosSample.csv as historical data with **54808 examples** and test.csv as current data **23490 examples** using pandas library in python.
 
 Applied **Logistic Regression, Support Vector Classifier, Random Forest Classifier, Bernoulli Naive Bayes**, and **KNeighborsClassifier** and optimized using **GridSearchCV** to find the best model.
 
@@ -13,6 +13,8 @@ Python version: *Python 3.7.11*
 Packages: *pandas, o seaborn, matplotlib, numpy, scikit-learn, and SMOTE*
 
 ### Resources Used
+
+[Machine Learning Yearning by Andrew Ng](https://www.goodreads.com/en/book/show/30741739-machine-learning-yearning)
 
 [Calculating the missing value ratio](https://www.analyticsvidhya.com/blog/2021/04/beginners-guide-to-missing-value-ratio-and-its-implementation/)
 
@@ -40,15 +42,15 @@ Used historical dataset with 13 columns:
 |is_promoted           |Categorical|
 
 ## Data Cleaning
-After pulling the data, I cleaned up the both dataset (historical and current) to reduce noises in the datasets. The changes were made follows:
+After pulling the data, I cleaned up the both datasets (historical and current) to reduce noise in the datasets. The changes were made follows:
 
-* Removed duplicates if there is any based on "employee_id" column, 
+* Removed duplicates if there are any based on the "employee_id" column, 
 * Checked null values and their ratio, and none of the variables are removed since their ratio is quite small,
 
 ![ratio_of_missing_values](https://user-images.githubusercontent.com/45776621/163044237-07e1e921-c30b-4775-bf84-01408cd17965.png)
 
 * Filled missing values of 'previous_year_rating' with mean based on 'awards_won?', 'education' and 'recruitment_channel' with most frequent value based on 'department', and 'gender' with mode based on 'awards_won? in the historical dataset,
-* #Filled missing values of 'previous_year_rating' on current dataset with mean based on 'awards_won?' from historical dataset, and 'education' on current dataset with most frequent value based on 'department' from historical dataset,
+* #Filled missing values of 'previous_year_rating' on the current dataset with mean based on 'awards_won?' from the historical dataset, and 'education' on the current dataset with most frequent value based on 'department' from historical dataset,
 * Replaced Bachelors with Bachelor's in 'education' column for consistency,
 
 **Before:**
@@ -119,7 +121,7 @@ I used six models *(Decision Tree Classifier, Logistic Regression, Support Vecto
 
 I used six models *(Decision Tree Classifier, Logistic Regression, Support Vector Classifier, Random Forest Classifier, Bernoulli Bayes, and KNeighborsClassifier)* to predict the sentiment and evaluated them by using *Accuracy*.
 
-Random Forest Classifier model performed better than any other models in this project but after tuning the parameters the accuracy dropped to 78% so that's why I used Decision Tree model as it comes to the second highest score.
+Random Forest Classifier model performed better than any other models in this project but after tuning the parameters the accuracy dropped to 78% so that's why I used Decision Tree model as it is the second-highest score.
 
 |Model                      |Cross Validation Accuracy Score|                      
 | -------------             |:-----------------:|                       
@@ -150,21 +152,25 @@ When we apply our model to current dataset, we can expect 13902 current employee
 ## Confusion Matrix
 The Confusion Matrix above shows that our model needs to be improved to predict promotions better.
 
-**Error Analysis** should be performed to understand the underlying causes of the error (missclassification).
-
 ![alt text](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/confusion_matrix.png "Confusion Matrix of Prediction of Employee promotion")
+
+We estimate the bias as **8.05%** and variance as **1.46%** (10.51-8.05). This classifier is fitting the training set poorly with 8.05% error, but its error on the test set is barely higher than the training error.
+
+The classifier therefore has **high bias,** but **low variance.**
+
+We can say that the algorithm is **underfitting.**
 
 |Data     |Accuracy Score (%)  |Error (%)|                    
 | --------|:----------------   |-------:| 
 |Training | 91.95              |8.05|
 |Test     | 89.49              |10.51|
 
-
-
-Since the accuracy on the training data **(91.95%)** (8.05% error) is less than the accuracy on the test data **(89.49%)** which means **10.51% error** , we can say our model is **overfitting** and needs to be improved.
+## Bias vs. Varince tradeoff
+**adding input features** might help to reduce bias on the model.
 
 ## Notes
 This model needs to be pickled so that it can be saved on disk.
 
+**Error Analysis** should be performed to understand the underlying causes of the error (missclassification).
 
 Thanks for reading :) 
