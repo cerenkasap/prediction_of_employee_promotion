@@ -166,7 +166,7 @@ We can say that the algorithm is **underfitting.**
 |Test     | 89.49              |10.51|
 
 ## Bias vs. Varince tradeoff
-**adding input features** might help to reduce bias on the model.
+**Adding input features** might help to reduce bias on the model.
 
 ## Notes
 This model needs to be pickled so that it can be saved on disk.
