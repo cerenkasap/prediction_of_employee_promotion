@@ -2,7 +2,7 @@
 
 Created a model that can classify a employee promotion as a Positive or a Negative with **(89% Accuracy)**.
 
-Used two dataset: PromosSample.csv as a traning set with **54808 examples** and test.csv as a test dataset **23490 examples** using pandas library in python.
+Used two dataset: PromosSample.csv as a historical data with **54808 examples** and test.csv as a current data **23490 examples** using pandas library in python.
 
 Applied **Logistic Regression, Support Vector Classifier, Random Forest Classifier, Bernoulli Naive Bayes**, and **KNeighborsClassifier** and optimized using **GridSearchCV** to find the best model.
 
@@ -21,7 +21,7 @@ Packages: *pandas, o seaborn, matplotlib, numpy, scikit-learn, and SMOTE*
 [Binary classification project with similar dataset](https://www.kaggle.com/code/amulya9/predict-employee-promotion-result/notebook)
 
 ## Data Collection
-Used training set with 13 columns:
+Used historical dataset with 13 columns:
 
 |Column name           |Variable type|
 | -------------        |:-----------:|                       
@@ -40,12 +40,15 @@ Used training set with 13 columns:
 |is_promoted           |Categorical|
 
 ## Data Cleaning
-After pulling the data, I cleaned up the both dataset (training and test) to reduce noises in the datasets. The changes were made follows:
+After pulling the data, I cleaned up the both dataset (historical and current) to reduce noises in the datasets. The changes were made follows:
 
 * Removed duplicates if there is any based on "employee_id" column, 
-* Checked null values and their ratio,
-* Filled missing values of 'previous_year_rating' with mean based on 'awards_won?', 'education' and 'recruitment_channel' with most frequent value based on 'department', and 'gender' with mode based on 'awards_won? in the training dataset,
-* #Filled missing values of 'previous_year_rating' with mean based on 'awards_won?' from training set, and 'education' with most frequent value based on 'department' from training set,
+* Checked null values and their ratio, and none of the variables are removed since their ratio is quite small,
+
+![ratio_of_missing_values](https://user-images.githubusercontent.com/45776621/163044237-07e1e921-c30b-4775-bf84-01408cd17965.png)
+
+* Filled missing values of 'previous_year_rating' with mean based on 'awards_won?', 'education' and 'recruitment_channel' with most frequent value based on 'department', and 'gender' with mode based on 'awards_won? in the historical dataset,
+* #Filled missing values of 'previous_year_rating' on current dataset with mean based on 'awards_won?' from historical dataset, and 'education' on current dataset with most frequent value based on 'department' from historical dataset,
 * Replaced Bachelors with Bachelor's in 'education' column for consistency,
 
 **Before:**
@@ -99,20 +102,26 @@ Visualized the cleaned data to see the trends.
 ![Bar_chart](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/previous_year_ratings.png)
 ![Dist](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/previous_year_ratings_dist.png)
 
+## Feature Engineering
 
+Categorical variables are encoded, numerical ones are normalized, and 'employee_id' variable is removed from both datasets.
+
+Data were balanced by applying SMOTE, and visualized by the donut chart:
+
+![Donut_Chart](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/donut_chart_after_resampling.png)
 
 ## Model Building
-![ratio_of_missing_values](https://user-images.githubusercontent.com/45776621/163044237-07e1e921-c30b-4775-bf84-01408cd17965.png)
-
-
 Data were split into **train (80%)** and **test (20%)** sets.
 
 I used six models *(Decision Tree Classifier, Logistic Regression, Support Vector Classifier, Random Forest Classifier, Bernoulli Bayes, and KNeighborsClassifier)* to predict the sentiment and evaluated them by using *Accuracy*.
 
 ## Model Performance Evalution
-Logistic Regression model performed better than any other models in this project.
 
-|Model                      |Test Accuracy Score|                      
+I used six models *(Decision Tree Classifier, Logistic Regression, Support Vector Classifier, Random Forest Classifier, Bernoulli Bayes, and KNeighborsClassifier)* to predict the sentiment and evaluated them by using *Accuracy*.
+
+Random Forest Classifier model performed better than any other models in this project but after tuning the parameters the accuracy dropped to 78% so that's why I used Decision Tree model as it comes to the second highest score.
+
+|Model                      |Cross Validation Accuracy Score||                      
 | -------------             |:-----------------:|                       
 |Decision Tree              |0.9195253234957474|
 |Logistic Regression        |0.7659303362220304|
@@ -122,12 +131,37 @@ Logistic Regression model performed better than any other models in this project
 |K-Neighbots                |0.8508799620065138|
 
 ## Hyperparameter Tuning
-
+I got the best accuracy **88.43%** with GridSearchCV and find the optimal hyperparameters.
 
 ## Best Model
+Applied Decision Tree model with the optimal hyperparameters and got **89.49%** Test Accuracy score.
 
+## Feature Importances
+'previous_year_rating', 'avg_training_score', and 'length_of_service' features mostly drives for the promotion. 
+
+![](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/feature_importances.png)
+
+## Predictions for current data
+
+When we apply our model to current dataset, we can expect 13902 current employees get promotion while 9588 employees do not get, the donut chart shows the distribution of getting promoted.
+
+![Donut_Chart](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/donut_chart_pred.png)
 
 ## Confusion Matrix
+The Confusion Matrix above shows that our model needs to be improved to predict promotions better.
+
+**Error Analysis** should be performed to understand the underlying causes of the error (missclassification).
+
+![alt text](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/confusion_matrix.png "Confusion Matrix of Prediction of Employee promotion")
+
+|Data     |Accuracy Score (%)|  |Error (%)|                    
+| --------|:----------------    |:-------:| 
+|Training| 91.95             |  |8.05|
+|Test|     89.49             |  |10.51|
+Since the accuracy on the training data **(91.95%)** (8.05% error) is less than the accuracy on the test data **(89.49%)** which means **10.51% error** , we can say our model is **overfitting** and needs to be improved.
+
+## Notes
+This model needs to be pickled so that it can be saved on disk.
 
 
 Thanks for reading :) 
