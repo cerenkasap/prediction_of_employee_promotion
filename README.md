@@ -10,7 +10,7 @@ Applied **Logistic Regression, Support Vector Classifier, Random Forest Classifi
 
 Python version: *Python 3.7.11* 
 
-Packages: *pandas, o seaborn, matplotlib, numpy, scikit-learn, and SMOTE*
+Packages: *pandas, o seaborn, matplotlib, numpy, scikit-learn, pickle, and SMOTE*
 
 ### Resources Used
 
@@ -126,17 +126,20 @@ Random Forest Classifier model performed better than any other models in this pr
 |Model                      |Cross Validation Accuracy Score|                      
 | -------------             |:-----------------:|                       
 |Decision Tree              |0.9195253234957474|
-|Logistic Regression        |0.7659303362220304|
-|Support Vector Classifier  |0.8381531307413898|
-|Random Forest Classifier   |0.9524331256811436|
-|Naive Bayes                |0.6817535632799406|
-|K-Neighbots                |0.8508799620065138|
+|Logistic Regression        |0.7662293985072149|
+|Support Vector Classifier  |0.8383399999993785|
+|Random Forest Classifier   |0.9529815862541542|
+|Naive Bayes                |0.6823518463325942|
+|K-Neighbots                |0.8514408572238384|
 
 ## Hyperparameter Tuning
 I got the best accuracy **88.43%** with GridSearchCV and find the optimal hyperparameters.
 
 ## Best Model
 Applied Decision Tree model with the optimal hyperparameters and got **89.49%** Test Accuracy score.
+
+## Save model
+This model is pickled so that it is saved on disk as **model_file.p.**
 
 ## Feature Importances
 'previous_year_rating', 'avg_training_score', and 'length_of_service' features mostly drives for the promotion. 
@@ -169,8 +172,6 @@ We can say that the algorithm is **underfitting.**
 **Adding input features** might help to reduce bias on the model.
 
 ## Notes
-This model needs to be pickled so that it can be saved on disk.
-
 **Error Analysis** should be performed to understand the underlying causes of the error (missclassification).
 
 Thanks for reading :) 
