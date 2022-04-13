@@ -142,7 +142,7 @@ Applied Decision Tree model with the optimal hyperparameters and got **89.49%** 
 This model is pickled so that it is saved on disk as **model_file.p.**
 
 ## Feature Importances
-'previous_year_rating', 'avg_training_score', and 'length_of_service' features mostly drives for the promotion. 
+'previous_year_rating', 'avg_training_score', and 'length_of_service' features have the most impact when it comes to deciding if the employee gets promoted or not. 
 
 ![](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/feature_importances.png)
 
