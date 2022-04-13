@@ -151,7 +151,7 @@ This model is pickled so that it is saved on disk as **model_file.p.**
 
 When we apply our model to current dataset, we can expect 13902 current employees get promotion while 9588 employees do not get, the donut chart shows the distribution of getting promoted.
 
-![Donut_Chart](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/donut_chart_pred.png)
+![Donut_Chart](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/pred_donut_chart.png)
 
 ## Confusion Matrix
 The Confusion Matrix above shows that our model needs to be improved to predict promotions better.
