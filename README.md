@@ -149,7 +149,7 @@ This model is pickled so that it is saved on disk as **model_file.p.**
 
 ## Predictions for current data
 
-When we apply our model to current dataset, we can expect 13902 current employees get promotion while 9588 employees do not get, the donut chart shows the distribution of getting promoted.
+When we apply our model to current dataset, we can expect 13902 current employees to get promotions while 9588 employees do not get, the donut chart shows the distribution of getting promoted.
 
 ![Donut_Chart](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/pred_donut_chart.png)
 
