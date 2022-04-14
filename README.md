@@ -84,7 +84,7 @@ Visualized the cleaned data to see the trends.
 
 **recruitment_channel** variable:
 ![Pie_Chart](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/recruitment_channel_piechart.png)
-![Percentage](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/recruitment_channel_percentage.png)
+![Percentage](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/recruitment_channel_dist.png)
 
 **education** variable:
 ![Pie_Chart](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/education_piechart.png)
@@ -101,6 +101,7 @@ Visualized the cleaned data to see the trends.
 ![Dist](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/age_dist.png)
 
 **previous_year_rating** variable:
+
 ![Bar_chart](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/previous_year_ratings.png)
 ![Dist](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/previous_year_ratings_dist.png)
 
