@@ -36,8 +36,7 @@ X_resample, y_resample  = SMOTE().fit_resample(X, y)
 colors = ['#4F6272', '#DD7596']
 fig, (ax1) = plt.subplots(ncols=1, figsize=(10, 5))
 y_resample.value_counts().head(3).plot(kind='pie', labels=None, autopct='%.2f', ax=ax1, wedgeprops = { 'linewidth' : 1, 'edgecolor' : 'white' }, colors=colors).legend(labels={
-                     "1",
-                     "0"})
+                     1,0})
 central_circle = plt.Circle((0, 0), 0.4, color='white')
 fig = plt.gcf()
 fig.gca().add_artist(central_circle)
