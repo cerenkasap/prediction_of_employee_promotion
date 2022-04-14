@@ -50,7 +50,7 @@ After pulling the data, I cleaned up the both datasets (historical and current) 
 ![ratio_of_missing_values](https://user-images.githubusercontent.com/45776621/163044237-07e1e921-c30b-4775-bf84-01408cd17965.png)
 
 * Filled missing values of 'previous_year_rating' with mean based on 'awards_won?', 'education' and 'recruitment_channel' with most frequent value based on 'department', and 'gender' with mode based on 'awards_won? in the historical dataset,
-* #Filled missing values of 'previous_year_rating' on the current dataset with mean based on 'awards_won?' from the historical dataset, and 'education' on the current dataset with most frequent value based on 'department' from historical dataset,
+* Filled missing values of 'previous_year_rating' on the current dataset with mean based on 'awards_won?' from the historical dataset, and 'education' on the current dataset with most frequent value based on 'department' from historical dataset,
 * Replaced Bachelors with Bachelor's in 'education' column for consistency,
 
 **Before:**
@@ -87,7 +87,7 @@ Visualized the cleaned data to see the trends.
 ![Percentage](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/recruitment_channel_percentage.png)
 
 **education** variable:
-![Pie_Chart](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/department_piechart.png)
+![Pie_Chart](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/education_piechart.png)
 ![Percentage](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/education_dist.png)
 
 **gender** variable:
@@ -154,7 +154,7 @@ When we apply our model to current dataset, we can expect 13902 current employee
 ![Donut_Chart](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/pred_donut_chart.png)
 
 ## Confusion Matrix
-The Confusion Matrix above shows that our model needs to be improved to predict promotions better.
+The Confusion Matrix below shows that our model needs to be improved to predict promotions better.
 
 ![alt text](https://github.com/cerenkasap/prediction_of_employee_promotion/blob/main/images/confusion_matrix.png "Confusion Matrix of Prediction of Employee promotion")
 
@@ -174,5 +174,6 @@ We can say that the algorithm is **underfitting.**
 
 ## Notes
 **Error Analysis** should be performed to understand the underlying causes of the error (missclassification).
+
 
 Thanks for reading :) 
