@@ -126,12 +126,12 @@ Random Forest Classifier model performed better than any other models in this pr
 
 |Model                      |Cross Validation Accuracy Score|                      
 | -------------             |:-----------------:|                       
-|Decision Tree              |0.9195253234957474|
-|Logistic Regression        |0.7662293985072149|
-|Support Vector Classifier  |0.8383399999993785|
-|Random Forest Classifier   |0.9529815862541542|
-|Naive Bayes                |0.6823518463325942|
-|K-Neighbots                |0.8514408572238384|
+|Decision Tree              |0.9272768163134083|
+|Logistic Regression        |0.7748373591096378|
+|Support Vector Classifier  |0.844780678076086|
+|Random Forest Classifier   |0.9496770892385463|
+|Naive Bayes                |0.6916930889263052|
+|K-Neighbots                |0.8362169216009582|
 
 ## Hyperparameter Tuning
 I got the best accuracy **88.43%** with GridSearchCV and find the optimal hyperparameters.
